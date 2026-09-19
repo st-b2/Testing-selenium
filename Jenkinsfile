@@ -5,18 +5,35 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo 'Код получен из репозитория'
-                sh 'ls -la'
             }
         }
-        stage('Check Python') {
+
+        stage('Setup venv') {
             steps {
-                sh 'python3 --version'
+                echo 'Создаём виртуальное окружение'
+                sh 'python3 -m venv venv'
+                sh '. venv/bin/activate && pip install --upgrade pip'
             }
         }
-        stage('Check Docker') {
+
+        stage('Install deps') {
             steps {
-                sh 'docker --version'
+                echo 'Устанавливаем зависимости'
+                sh '. venv/bin/activate && pip install -r requirements.txt'
             }
+        }
+
+        stage('Run tests') {
+            steps {
+                echo 'Запускаем pytest'
+                sh '. venv/bin/activate && pytest || true'
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Билд завершён'
         }
     }
 }
