@@ -1,0 +1,9 @@
+name: selenium_env
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - requests
+  - pytest
+  - selenium
+  - faker
