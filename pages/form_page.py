@@ -22,7 +22,7 @@ class FormPage(BasePage):
             locator = (By.CSS_SELECTOR, f"input[name='fav_drink'][value='{drink}']")
             element = self.find(locator)
             if not element.is_selected():
-                element.click()
+                self.click(locator)
 
         self.click((By.CSS_SELECTOR, f"input[name='fav_color'][value='{data['color']}']"))
 
