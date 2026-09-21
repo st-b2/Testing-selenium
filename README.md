@@ -59,7 +59,7 @@
 ---
 
 ## 🏗 Архитектура CI/CD
-<img width="311" height="445" alt="Screenshot_1" src="https://github.com/user-attachments/assets/55fcc146-f2ae-4ceb-9b3b-b7f362b8cf8a" />
+<img width="313" height="453" alt="Screenshot_2" src="https://github.com/user-attachments/assets/a28bdee2-db3d-4bbf-baed-0193081ae291" />
 
 ---
 ## ⚙️ Требования
