@@ -7,6 +7,7 @@ def create_driver(browser: str = "chrome", headless: bool = False):
     if browser.lower() == "chrome":
         opts = ChromeOptions()
         opts.page_load_strategy = "eager"
+        opts.add_argument("--window-size=1920,1080")
         if headless:
             opts.add_argument("--headless=new")
         return webdriver.Chrome(options=opts)
