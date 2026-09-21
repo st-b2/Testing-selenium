@@ -16,6 +16,6 @@ def test_full_form(driver):
     }
 
     page = FormPage(driver).load()
-    alert_text = page.fill(data).submit_and_read_alert()
+    alert_text = page.fill(data).submit_n_read_alert()
 
     assert "Message received" in alert_text
