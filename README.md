@@ -73,7 +73,7 @@
 На CI-сервере (VM)
 ```text
     Ubuntu Server 22.04+
-    Java 17+
+    Java 21+
     Jenkins LTS
     Python 3.11+, python3-venv, python3-pip
     Docker + добавление пользователя jenkins в группу docker
