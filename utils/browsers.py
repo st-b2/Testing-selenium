@@ -6,6 +6,7 @@ from selenium.webdriver.firefox.options import Options as FirefoxOptions
 def create_driver(browser: str = "chrome", headless: bool = False):
     if browser.lower() == "chrome":
         opts = ChromeOptions()
+        opts.page_load_strategy = "eager"
         if headless:
             opts.add_argument("--headless=new")
         return webdriver.Chrome(options=opts)
