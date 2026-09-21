@@ -7,7 +7,7 @@ class FormPage(BasePage):
     NAME = (By.ID, "name-input")
     EMAIL = (By.ID, "email")
     PASSWORD = (By.CSS_SELECTOR, "input[type='password']")
-    MESSAGE = (By.CSS_SELECTOR, "textarea[name='message']")
+    MESSAGE = (By.ID, "message")
     AUTOMATION = (By.ID, "automation")
     SUBMIT = (By.ID, "submit-btn")
 
@@ -19,7 +19,7 @@ class FormPage(BasePage):
         self.type(self.PASSWORD, data["password"])
 
         for drink in data["drinks"]:
-            locator = (By.CSS_SELECTOR, f"input[name='drink'][value='{drink}']")
+            locator = (By.CSS_SELECTOR, f"input[name='fav_drink'][value='{drink}']")
             element = self.find(locator)
             if not element.is_selected():
                 element.click()
