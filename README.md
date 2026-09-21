@@ -265,9 +265,6 @@ pytest tests/test_main.py -v -s
 # Собрать тесты без запуска
 pytest --collect-only
 
-# Только smoke-тесты
-pytest -m smoke
-
 # Параллельно (pytest-xdist)
 pytest -n 4
 
@@ -279,7 +276,7 @@ Docker / Selenium
 
 # Запустить Chrome
 docker run -d --name chrome -p 4444:4444 -p 7900:7900 \
-    --shm-size=2g selenium/standalone-chrome:latest
+--shm-size=2g selenium/standalone-chrome:latest
 
 # Статус
 docker ps
