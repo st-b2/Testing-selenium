@@ -130,11 +130,16 @@ docker rm -f chrome
 # Java
 sudo apt install -y fontconfig openjdk-17-jre
 
-# Jenkins (через .deb — надёжнее, чем apt-репозиторий)
-cd /tmp
-curl -fsSLO https://get.jenkins.io/debian-stable/jenkins_2.568.3_all.deb
-sudo dpkg -i jenkins_2.568.3_all.deb
-sudo apt --fix-broken install -y
+# Jenkins
+sudo wget -O /etc/apt/keyrings/jenkins-keyring.asc \
+https://pkg.jenkins.io/debian-stable/jenkins.io-2026.key
+  
+echo "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc]" \
+https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+/etc/apt/sources.list.d/jenkins.list > /dev/null
+  
+sudo apt update
+sudo apt install jenkins
 
 # Запуск
 sudo systemctl enable --now jenkins
