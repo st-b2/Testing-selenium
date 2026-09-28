@@ -60,7 +60,65 @@
 ---
 
 ## 🏗 Архитектура CI/CD
-<img width="313" height="453" alt="Screenshot_2" src="https://github.com/user-attachments/assets/a28bdee2-db3d-4bbf-baed-0193081ae291" />
+```text
+┌───────────────────────────────────────────────────────┐
+│  Разработчик (Windows / macOS / Linux)                │
+│  ┌─────────────────────────────────────────────┐      │
+│  │  PyCharm + Python venv (selenium_env)       │      │
+│  │  Chrome (видимый) — локальная отладка       │      │
+│  │  pytest tests/test_main.py -v -s            │      │
+│  └─────────────────────┬───────────────────────┘      │
+│                        │ git push                      │
+└────────────────────────┼──────────────────────────────┘
+                         │
+                         ▼
+┌───────────────────────────────────────────────────────┐
+│  GitHub Repository (Testing-selenium)                 │
+│  ├── pages/  tests/  utils/                          │
+│  ├── conftest.py  pytest.ini  requirements.txt       │
+│  └── Jenkinsfile                                     │
+└────────────────────────┬──────────────────────────────┘
+                         │ git fetch (по кнопке/вебхуку/cron)
+                         ▼
+┌───────────────────────────────────────────────────────┐
+│  Jenkins (Ubuntu VM)                                  │
+│                                                       │
+│  [Stage 0] Declarative: Checkout SCM                  │
+│    └─ автоматически клонирует repo в workspace        │
+│                                                       │
+│  [Stage 1] Checkout          → echo (проверка)        │
+│  [Stage 2] Start Selenium    → docker run chrome      │
+│  [Stage 3] Setup venv        → python3 -m venv        │
+│  [Stage 4] Install deps      → pip install -r req.txt │
+│  [Stage 5] Run tests         → pytest --grid-url=...  │
+│                                                       │
+│  [Post: always]                                       │
+│    ├─ publishHTML  → отчёт в UI Jenkins               │
+│    └─ docker rm -f → очистка контейнера               │
+└─────┬─────────────────────────────────────────────────┘
+      │ docker run / pytest → :4444
+      ▼
+┌───────────────────────────────────────────────────────┐
+│  Selenium Chrome (Docker, на той же VM)               │
+│  ┌─────────────────────────────────────────────┐      │
+│  │  Chrome headless                            │      │
+│  │  Selenium Grid  ← pytest подключается       │      │
+│  │  VNC :7900 (для наблюдения)                 │      │
+│  └─────────────────────────────────────────────┘      │
+└───────────────────────────────────────────────────────┘
+      │
+      │ результаты pytest
+      ▼
+┌───────────────────────────────────────────────────────┐
+│  Артефакты и обратная связь                           │
+│  ├─ Console Output (лог билда, виден в UI)            │
+│  ├─ reports/report.html (публикуется в UI Jenkins)    │
+│  ├─ reports/*.png (скриншоты при падении — TODO)      │
+│  └─ (опционально) Email / Telegram уведомления        │
+└───────────────────────────────────────────────────────┘
+
+[!] - Схема сгенерированна с помощью ИИ
+```
 
 ---
 ## ⚙️ Требования
